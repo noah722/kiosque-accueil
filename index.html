@@ -11,40 +11,41 @@
 
   <style>
     :root{
-       /* Palette rose */
-  --pink: #ec95ff;
-  --pink-soft: rgba(236,149,255,.18);
-  --pink-strong: #ff7adf;
+      /* Palette rose */
+      --pink: #ec95ff;
+      --pink-soft: rgba(236,149,255,.18);
+      --pink-strong: #ff7adf;
 
-  /* Couleurs existantes */
-  --primary:#005bc0;
-  --cyan:#14c6e9;
-  --red:#ff5c65;
-  --green:#80e080;
+      /* Couleurs existantes */
+      --primary:#005bc0;
+      --cyan:#14c6e9;
+      --red:#ff5c65;
+      --green:#80e080;
 
-  --bg:#07152b;
-  --text:rgba(255,255,255,.92);
-  --muted:rgba(255,255,255,.72);
+      --bg:#07152b;
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.72);
 
-  --card:rgba(255,255,255,.10);
-  --card2:rgba(255,255,255,.07);
-  --stroke:rgba(255,255,255,.14);
+      --card:rgba(255,255,255,.10);
+      --card2:rgba(255,255,255,.07);
+      --stroke:rgba(255,255,255,.14);
 
-  --btn:rgba(236,149,255,.14);
-  --btnHover:rgba(236,149,255,.22);
+      --btn:rgba(236,149,255,.14);
+      --btnHover:rgba(236,149,255,.22);
 
-  --radius:26px;
-  --shadow:0 20px 60px rgba(0,0,0,.35);
-}
+      --radius:26px;
+      --shadow:0 20px 60px rgba(0,0,0,.35);
+    }
+
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       background:
-      radial-gradient(1200px 900px at 15% 10%, rgba(236,149,255,.25), transparent 55%),
-      radial-gradient(900px 700px at 85% 20%, rgba(255,122,223,.18), transparent 55%),
-      radial-gradient(900px 700px at 70% 95%, rgba(20,198,233,.12), transparent 55%),
-      var(--bg);
+        radial-gradient(1200px 900px at 15% 10%, rgba(236,149,255,.25), transparent 55%),
+        radial-gradient(900px 700px at 85% 20%, rgba(255,122,223,.18), transparent 55%),
+        radial-gradient(900px 700px at 70% 95%, rgba(20,198,233,.12), transparent 55%),
+        var(--bg);
       color:var(--text);
       min-height:100vh;
       display:flex;
@@ -61,12 +62,10 @@
       gap:14px;
       margin-bottom:18px;
     }
-    .logo{
-      width:46px;height:46px;
-      border-radius:14px;
-      background: linear-gradient(135deg, var(--primary), var(--cyan));
-      box-shadow: var(--shadow);
-    }
+
+    /* ✅ On enlève le carré/icone bleu : on garde juste le texte */
+    .logo{ display:none; }
+
     .brand h1{margin:0;font-size:22px;letter-spacing:.3px}
     .brand p{margin:2px 0 0 0;font-size:14px;color:var(--muted)}
 
@@ -113,8 +112,8 @@
     }
     .dot{
       width:10px;height:10px;border-radius:999px;
-      background:var(--cyan);
-      box-shadow:0 0 0 6px rgba(20,198,233,.18);
+      background:var(--pink);
+      box-shadow:0 0 0 6px rgba(236,149,255,.18);
     }
 
     .grid{
@@ -124,54 +123,54 @@
       margin-top:18px;
     }
 
-      button.big{
-    appearance:none;
-    border:none;
-    cursor:pointer;
-    padding:18px;
-    min-height:74px;
-    border-radius:22px;
-    background: linear-gradient(
-      135deg,
-      rgba(236,149,255,.28),
-      rgba(236,149,255,.12)
-    );
-    border:1px solid rgba(236,149,255,.35);
-    color:var(--text);
-    font-size:20px;
-    font-weight:900;
-    display:flex;
-    align-items:center;
-    gap:14px;
-    width:100%;
-    text-align:left;
-    transition: background .2s ease, transform .06s ease, box-shadow .2s ease;
-  }
-    
-  button.big:hover{
-    background: linear-gradient(
-      135deg,
-      rgba(236,149,255,.38),
-      rgba(236,149,255,.18)
-    );
-    box-shadow: 0 0 0 4px rgba(236,149,255,.18);
-  }
-  
-  button.big:active{
-    transform: scale(.98);
-  }
+    button.big{
+      appearance:none;
+      border:none;
+      cursor:pointer;
+      padding:18px;
+      min-height:74px;
+      border-radius:22px;
+      background: linear-gradient(
+        135deg,
+        rgba(236,149,255,.28),
+        rgba(236,149,255,.12)
+      );
+      border:1px solid rgba(236,149,255,.35);
+      color:var(--text);
+      font-size:20px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      width:100%;
+      text-align:left;
+      transition: background .2s ease, transform .06s ease, box-shadow .2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-  .icon{
-  width:44px;height:44px;
-  border-radius:16px;
-  display:grid;
-  place-items:center;
-  background: rgba(236,149,255,.22);
-  border: 1px solid rgba(236,149,255,.35);
-  font-size:22px;
-  flex:0 0 auto;
-}
+    button.big:hover{
+      background: linear-gradient(
+        135deg,
+        rgba(236,149,255,.38),
+        rgba(236,149,255,.18)
+      );
+      box-shadow: 0 0 0 4px rgba(236,149,255,.18);
+    }
 
+    button.big:active{
+      transform: scale(.98);
+    }
+
+    .icon{
+      width:44px;height:44px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background: rgba(236,149,255,.22);
+      border: 1px solid rgba(236,149,255,.35);
+      font-size:22px;
+      flex:0 0 auto;
+    }
 
     .choices{
       display:flex;
@@ -195,7 +194,7 @@
       -webkit-tap-highlight-color: transparent;
     }
     .choice:hover{background:var(--btnHover)}
-    .choice.alt{outline:2px solid rgba(20,198,233,.25)}
+    .choice.alt{outline:2px solid rgba(236,149,255,.25)}
 
     .hint{
       margin-top:10px;
@@ -223,8 +222,8 @@
       outline:none;
     }
     input:focus{
-  border-color: var(--pink);
-  box-shadow: 0 0 0 4px var(--pink-soft);
+      border-color: var(--pink);
+      box-shadow: 0 0 0 4px var(--pink-soft);
     }
     .full{grid-column:1/-1}
 
@@ -245,21 +244,15 @@
       background:var(--btn);
       color:var(--text);
       cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
     }
     .btnSmall:hover{background:var(--btnHover)}
     .btnPrimary{
-  background: linear-gradient(
-    135deg,
-    var(--pink-strong),
-    var(--pink)
-  );
-  border: none;
-  box-shadow: 0 10px 30px rgba(236,149,255,.35);
-}
-.btnPrimary:hover{
-  filter: brightness(1.05);
-}
-
+      background: linear-gradient(135deg, var(--pink-strong), var(--pink));
+      border: none;
+      box-shadow: 0 10px 30px rgba(236,149,255,.35);
+    }
+    .btnPrimary:hover{ filter: brightness(1.05); }
 
     .error{
       margin-top:12px;
@@ -280,7 +273,7 @@
       margin:20px auto 0;
       width:46px;height:46px;border-radius:999px;
       border:4px solid rgba(255,255,255,.2);
-      border-top-color:var(--cyan);
+      border-top-color:var(--pink);
       animation:spin 1s linear infinite;
     }
     @keyframes spin{to{transform:rotate(360deg)}}
@@ -293,6 +286,7 @@
       user-select:none;
     }
 
+    /* (optionnel) debug */
     .jsok{
       position:fixed;
       left:10px;bottom:10px;
@@ -305,6 +299,7 @@
       opacity:.75;
       user-select:none;
       pointer-events:none;
+      display:none; /* ✅ caché */
     }
 
     @media(max-width:720px){
@@ -321,7 +316,7 @@
       <div class="logo"></div>
       <div>
         <h1>Accueil</h1>
-        <p>Nous sommes la pour vous aider.</p>
+        <p>On est là pour t’aider.</p>
       </div>
     </div>
 
@@ -331,48 +326,48 @@
         <div class="top">
           <div class="title">
             <h2>Bienvenue 👋</h2>
-            <p>Choisissez ce que vous venez faire aujourd hui.</p>
+            <p>Choisis ce que tu viens faire aujourd’hui.</p>
           </div>
-          <div class="pill"><span class="dot"></span> Reception</div>
+          <div class="pill"><span class="dot"></span> Réception</div>
         </div>
 
         <div class="grid">
           <button type="button" class="big" onclick="pick('info')">
-            <span class="icon">ℹ️</span> Informations et reservations
+            <span class="icon">ℹ️</span> Informations et réservations
           </button>
 
           <button type="button" class="big" onclick="pick('cours')">
-            <span class="icon">📚</span> J ai un cours reserve
+            <span class="icon">📚</span> J’ai un cours réservé
           </button>
 
           <button type="button" class="big" onclick="pick('moto')">
-            <span class="icon">🏍️</span> J ai loue une moto
+            <span class="icon">🏍️</span> J’ai loué une moto
           </button>
 
           <button type="button" class="big" onclick="pick('equip')">
-            <span class="icon">🧤</span> Je souhaite louer de l equipement
+            <span class="icon">🧤</span> Je souhaite louer de l’équipement
           </button>
         </div>
 
-        <p class="hint">Les informations sont utilisees uniquement pour l accueil.</p>
+        <p class="hint">Tes informations servent uniquement à t’accueillir et t’orienter.</p>
       </div>
 
       <!-- STEP 2 -->
       <div id="s2" class="screen">
         <div class="top">
           <div class="title">
-            <h2>Votre cours est :</h2>
-            <p class="hint">Choisissez une option.</p>
+            <h2>Ton cours est :</h2>
+            <p class="hint">Choisis une option.</p>
           </div>
-          <div class="pill"><span class="dot"></span> Etape 2</div>
+          <div class="pill"><span class="dot"></span> Étape 2</div>
         </div>
 
         <div class="choices">
           <div class="choice alt" onclick="pick('cours_prive')">
-            <span>👤 Cours prive</span><span style="color:var(--cyan)">OK</span>
+            <span>👤 Cours privé</span><span style="color:var(--pink)">OK</span>
           </div>
           <div class="choice alt" onclick="pick('cours_groupe')">
-            <span>👥 Cours en groupe</span><span style="color:var(--cyan)">OK</span>
+            <span>👥 Cours en groupe</span><span style="color:var(--pink)">OK</span>
           </div>
         </div>
 
@@ -385,15 +380,15 @@
       <div id="s3" class="screen">
         <div class="top">
           <div class="title">
-            <h2 id="formTitle">Vos coordonnees</h2>
+            <h2 id="formTitle">Tes coordonnées</h2>
             <p id="formSubtitle" class="hint"></p>
           </div>
-          <div class="pill"><span class="dot"></span> Derniere etape</div>
+          <div class="pill"><span class="dot"></span> Dernière étape</div>
         </div>
 
         <div class="form">
           <div class="field">
-            <label for="firstName">Prenom *</label>
+            <label for="firstName">Prénom *</label>
             <input id="firstName" autocomplete="given-name" placeholder="Ex : Noah" />
           </div>
 
@@ -403,7 +398,7 @@
           </div>
 
           <div id="phoneField" class="field full" style="display:none;">
-            <label for="phone">Telephone *</label>
+            <label for="phone">Téléphone *</label>
             <input id="phone" autocomplete="tel" placeholder="Ex : 079 123 45 67" />
           </div>
 
@@ -415,7 +410,7 @@
         <div id="err" class="error"></div>
 
         <div class="actionsRow">
-          <button type="button" class="btnSmall" onclick="resetAll()">↩️ Debut</button>
+          <button type="button" class="btnSmall" onclick="resetAll()">↩️ Revenir au début</button>
           <button type="button" class="btnSmall btnPrimary" onclick="submitForm()">Valider</button>
         </div>
       </div>
@@ -424,15 +419,15 @@
       <div id="s4" class="screen">
         <div class="center">
           <h2>Merci 🙏</h2>
-          <p id="finalText">C est note.</p>
+          <p id="finalText">C’est noté.</p>
           <div class="spinner" aria-hidden="true"></div>
           <p style="margin-top:12px;color:var(--muted)">
-            Retour a l accueil dans <span id="count">6</span>...
+            Retour à l’accueil dans <span id="count">6</span>...
           </p>
         </div>
       </div>
 
-      <div class="version">VERSION: SAFE-ASCII-1</div>
+      <div class="version">VERSION: FR-TU-1</div>
     </div>
   </div>
 
@@ -440,14 +435,13 @@
 
 <script>
   // Make webhook (yours)
-  var MAKE_WEBHOOK_URL = "https://hook.eu2.make.com/wezbhxrv8u3n9h6ilgda2rw3e57r5y26";
-  var AGENCY = "Reception";
+  const MAKE_WEBHOOK_URL = "https://hook.eu2.make.com/wezbhxrv8u3n9h6ilgda2rw3e57r5y26";
+  const AGENCY = "Réception";
 
-  var state = { flow: null, needPhone: false };
+  const state = { flow: null, needPhone: false };
 
   function show(id){
-    var screens = document.querySelectorAll(".screen");
-    for(var i=0;i<screens.length;i++){ screens[i].classList.remove("active"); }
+    document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
     document.getElementById(id).classList.add("active");
   }
 
@@ -477,56 +471,56 @@
 
     document.getElementById("phoneField").style.display = state.needPhone ? "block" : "none";
 
-    var title = document.getElementById("formTitle");
-    var subtitle = document.getElementById("formSubtitle");
-    var instructions = document.getElementById("instructions");
+    const title = document.getElementById("formTitle");
+    const subtitle = document.getElementById("formSubtitle");
+    const instructions = document.getElementById("instructions");
 
-    title.textContent = "Vos coordonnees";
-    subtitle.textContent = "Merci d indiquer au minimum votre prenom et votre nom.";
+    title.textContent = "Tes coordonnées";
+    subtitle.textContent = "Indique au minimum ton prénom et ton nom.";
 
     if(flow === "info"){
-      instructions.textContent = "Merci. Une personne pourra vous renseigner des que possible.";
+      instructions.textContent = "Merci. Une personne pourra te renseigner dès que possible.";
     } else if(flow === "cours_prive"){
-      instructions.textContent = "Parfait. Vous pouvez vous installer, boire quelque chose a la cafetaria ou aller aux toilettes. Votre moniteur viendra vous chercher.";
+      instructions.textContent = "Parfait 👌 Tu peux t’installer, boire quelque chose à la cafétéria ou aller aux toilettes. Ton moniteur viendra te chercher.";
     } else if(flow === "cours_groupe"){
-      instructions.textContent = "Parfait. Votre cours aura lieu dans la salle de cours. Vous pouvez entrer et tourner a droite derriere ce comptoir.";
+      instructions.textContent = "Parfait 👌 Ton cours a lieu dans la salle de cours. Tu peux entrer et tourner à droite derrière ce comptoir.";
     } else if(flow === "moto"){
-      instructions.textContent = "Un SMS est envoye automatiquement 15 minutes avant le debut de la location avec un lien. Cliquez dessus pour obtenir le code, recuperer la moto et profiter.";
+      instructions.textContent = "Un SMS a été envoyé automatiquement 15 minutes avant le début de ta location avec un lien. Clique dessus pour obtenir ton code clé, récupérer ta moto et profiter 🏍️";
     } else if(flow === "equip"){
-      title.textContent = "Location d equipement";
-      subtitle.textContent = "Merci d indiquer prenom, nom et telephone. Nous prevenons la secretaire.";
-      instructions.textContent = "Apres validation, la secretaire est notifiee pour venir vous aider.";
+      title.textContent = "Location d’équipement";
+      subtitle.textContent = "Indique ton prénom, ton nom et ton téléphone. On prévient la secrétaire.";
+      instructions.textContent = "Après validation, la secrétaire est notifiée et vient te renseigner.";
     }
 
     document.getElementById("err").style.display = "none";
   }
 
   function flowLabel(flow){
-    if(flow === "info") return "Informations et reservations";
-    if(flow === "cours_prive") return "Cours reserve - prive";
-    if(flow === "cours_groupe") return "Cours reserve - groupe";
+    if(flow === "info") return "Informations et réservations";
+    if(flow === "cours_prive") return "Cours réservé - privé";
+    if(flow === "cours_groupe") return "Cours réservé - groupe";
     if(flow === "moto") return "Location moto";
-    if(flow === "equip") return "Location equipement";
+    if(flow === "equip") return "Location équipement";
     return "Inconnu";
   }
 
   function showError(msg){
-    var e = document.getElementById("err");
+    const e = document.getElementById("err");
     e.textContent = msg;
     e.style.display = "block";
   }
 
   function validate(){
-    var fn = document.getElementById("firstName").value.trim();
-    var ln = document.getElementById("lastName").value.trim();
-    var ph = document.getElementById("phone").value.trim();
+    const fn = document.getElementById("firstName").value.trim();
+    const ln = document.getElementById("lastName").value.trim();
+    const ph = document.getElementById("phone").value.trim();
 
     if(!fn || !ln){
-      showError("Merci de renseigner au minimum le prenom et le nom.");
+      showError("Merci de renseigner au minimum le prénom et le nom.");
       return false;
     }
     if(state.needPhone && !ph){
-      showError("Merci de renseigner le telephone.");
+      showError("Merci de renseigner ton téléphone.");
       return false;
     }
     document.getElementById("err").style.display = "none";
@@ -534,11 +528,11 @@
   }
 
   function startCountdown(seconds){
-    var s = seconds;
-    var el = document.getElementById("count");
+    let s = seconds;
+    const el = document.getElementById("count");
     el.textContent = String(s);
 
-    var t = setInterval(function(){
+    const t = setInterval(() => {
       s -= 1;
       el.textContent = String(s);
       if(s <= 0){
@@ -551,7 +545,7 @@
   async function submitForm(){
     if(!validate()) return;
 
-    var payload = {
+    const payload = {
       firstName: document.getElementById("firstName").value.trim(),
       lastName: document.getElementById("lastName").value.trim(),
       phone: (document.getElementById("phone").value.trim() || null),
@@ -564,13 +558,13 @@
 
     show("s4");
 
-    var finalText = document.getElementById("finalText");
+    const finalText = document.getElementById("finalText");
     if(state.flow === "equip"){
-      finalText.textContent = "Merci. La secretaire a ete prevenu(e) et arrive.";
+      finalText.textContent = "Merci. La secrétaire a été prévenue et arrive.";
     } else if(state.flow === "moto"){
-      finalText.textContent = "Merci. Bonne location.";
+      finalText.textContent = "Merci. Bonne location 🏍️";
     } else {
-      finalText.textContent = "Merci. C est note.";
+      finalText.textContent = "Merci. C’est noté.";
     }
 
     try{
@@ -580,15 +574,14 @@
         body: JSON.stringify(payload)
       });
     } catch(e){
-      // do nothing (kiosk UX first)
       console.warn("Webhook error", e);
     }
 
     startCountdown(6);
   }
 
-  // Visible indicator that JS loaded
-  document.getElementById("jsok").textContent = "JS OK";
+  // Debug indicator (hidden by default)
+  // document.getElementById("jsok").textContent = "JS OK";
 </script>
 
 </body>
