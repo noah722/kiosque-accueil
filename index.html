@@ -43,30 +43,6 @@
 </div>
 
 <script>
-    
-  // Affiche l'élément réellement "touché" au clic
-  document.addEventListener('click', (e) => {
-    const el = document.elementFromPoint(e.clientX, e.clientY);
-    const dbg = document.getElementById('dbg');
-    dbg.textContent =
-      'CLICK reçu ✅ | target=' + (e.target && e.target.tagName) +
-      ' | elementFromPoint=' + (el && el.tagName) +
-      (el && el.className ? (' .' + el.className) : '');
-  }, true);
-
-  // Vérifie si ta fonction existe (sinon, tu as une erreur JS)
-  window.addEventListener('load', () => {
-    const dbg = document.getElementById('dbg');
-    dbg.textContent += ' | goToConfirm=' + (typeof window.goToConfirm);
-  });
-
-  // Capture les erreurs JS et les affiche à l'écran
-  window.addEventListener('error', (ev) => {
-    const dbg = document.getElementById('dbg');
-    dbg.textContent = 'ERREUR JS ❌ ' + ev.message;
-  });
-</script>
-
     body{
       margin:0;
       font-family: "Obviously", Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -310,7 +286,18 @@
     }
   </style>
 </head>
+<div style="position:fixed;bottom:8px;right:10px;font:12px system-ui;color:#fff;opacity:.7;z-index:999999">
+  VERSION: DEBUG-1
+</div>
+<script>
+  window.addEventListener('error', (ev) => {
+    alert("ERREUR JS: " + ev.message);
+  });
 
+  window.addEventListener('load', () => {
+    alert("Page chargée. goToConfirm = " + typeof window.goToConfirm);
+  });
+</script>
 <body>
   <div class="wrap">
     <div class="brand">
