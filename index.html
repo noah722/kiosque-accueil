@@ -286,18 +286,6 @@
     }
   </style>
 </head>
-<div style="position:fixed;bottom:8px;right:10px;font:12px system-ui;color:#fff;opacity:.7;z-index:999999">
-  VERSION: DEBUG-1
-</div>
-<script>
-  window.addEventListener('error', (ev) => {
-    alert("ERREUR JS: " + ev.message);
-  });
-
-  window.addEventListener('load', () => {
-    alert("Page chargée. goToConfirm = " + typeof window.goToConfirm);
-  });
-</script>
 <body>
   <div class="wrap">
     <div class="brand">
@@ -314,7 +302,7 @@
         <div class="top">
           <div class="title">
             <h2>Bienvenue 👋</h2>
-            <p>Choisissez ce que vous venez faire aujourd’hui.</p>
+            <p>Choisissez ce que vous venez faire aujourd hui.</p>
           </div>
           <div class="pill"><span class="dot"></span> Réception</div>
         </div>
@@ -325,15 +313,15 @@
           </button>
 
           <button type="button" class="big" onclick="pick('cours')">
-            <span class="icon">📚</span> J’ai un cours réservé
+            <span class="icon">📚</span> J ai un cours réservé
           </button>
 
           <button type="button" class="big" onclick="pick('moto')">
-            <span class="icon">🏍️</span> J’ai loué une moto
+            <span class="icon">🏍️</span> J ai loué une moto
           </button>
 
           <button type="button" class="big" onclick="pick('equip')">
-            <span class="icon">🧤</span> Je souhaite louer de l’équipement
+            <span class="icon">🧤</span> Je souhaite louer de l équipement
           </button>
         </div>
 
@@ -407,10 +395,10 @@
       <div id="s4" class="screen">
         <div class="center">
           <h2>Merci 🙏</h2>
-          <p id="finalText">C’est noté.</p>
+          <p id="finalText">C est noté.</p>
           <div class="spinner"></div>
           <p style="margin-top:12px;color:var(--muted)">
-            Retour à l’accueil dans <span id="count">6</span>…
+            Retour à l accueil dans <span id="count">6</span>…
           </p>
         </div>
       </div>
@@ -420,8 +408,8 @@
   </div>
 
 <script>
-  // ✅ Mets ici l’URL du webhook Make (quand tu l’as)
-  const MAKE_WEBHOOK_URL = "";
+  // ✅ Mets ici l URL du webhook Make (quand tu las)
+  const MAKE_WEBHOOK_URL = "https://hook.eu2.make.com/wezbhxrv8u3n9h6ilgda2rw3e57r5y26";
 
   // Optionnel (si tu veux stocker agence / lieu)
   const AGENCY = "Réception";
@@ -468,19 +456,20 @@
     phoneField.style.display = state.needPhone ? "block" : "none";
 
     title.textContent = "Vos coordonnées";
-    subtitle.textContent = "Merci d’indiquer au minimum votre prénom et votre nom.";
+    subtitle.textContent = "Merci d indiquer au minimum votre prénom et votre nom.";
 
     if(flow === 'info'){
       instructions.textContent = "Merci. Une personne pourra vous renseigner dès que possible.";
     } else if(flow === 'cours_prive'){
-      instructions.textContent = "Parfait 👍 Tu peux t’installer, boire quelque chose à la cafétéria ou aller aux toilettes. Ton moniteur viendra te chercher.";
+      instructions.textContent = "Parfait 👍 Tu peux t 
+        installer, boire quelque chose à la cafétéria ou aller aux toilettes. Ton moniteur viendra te chercher.";
     } else if(flow === 'cours_groupe'){
       instructions.textContent = "Parfait 👍 Ton cours aura lieu dans la salle de cours. Tu peux entrer et tourner à droite derrière ce comptoir.";
     } else if(flow === 'moto'){
-      instructions.textContent = "Un SMS s’est automatiquement envoyé 15 minutes avant le début de ta location avec un lien. Il te suffit de cliquer dessus pour obtenir ton code clé, récupérer ta moto et profiter 🏍️";
+      instructions.textContent = "Un SMS s est automatiquement envoyé 15 minutes avant le début de ta location avec un lien. Il te suffit de cliquer dessus pour obtenir ton code clé, récupérer ta moto et profiter 🏍️";
     } else if(flow === 'equip'){
-      title.textContent = "Location d’équipement";
-      subtitle.textContent = "Merci d’indiquer ton prénom, nom et téléphone. Nous prévenons la secrétaire.";
+      title.textContent = "Location d équipement";
+      subtitle.textContent = "Merci d indiquer ton prénom, nom et téléphone. Nous prévenons la secrétaire.";
       instructions.textContent = "Après validation, la secrétaire est notifiée pour venir te renseigner.";
     }
 
@@ -543,7 +532,7 @@
     } else if(state.flow === 'moto'){
       finalText.textContent = "Merci. Bonne location 🏍️";
     } else {
-      finalText.textContent = "Merci. C’est noté.";
+      finalText.textContent = "Merci. C est noté.";
     }
 
     if(MAKE_WEBHOOK_URL){
@@ -554,7 +543,7 @@
           body: JSON.stringify(payload)
         });
       } catch(e) {
-        // on ne casse jamais l’expérience utilisateur
+        // on ne casse jamais l expérience utilisateur
       }
     }
 
