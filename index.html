@@ -34,6 +34,39 @@
     }
 
     *{ box-sizing:border-box }
+    <div id="dbg"
+     style="position:fixed;top:10px;left:10px;right:10px;
+            background:rgba(0,0,0,.65);color:#fff;padding:10px 12px;
+            border-radius:12px;font:14px system-ui;z-index:999999;
+            pointer-events:none;">
+  Debug prêt…
+</div>
+
+<script>
+    
+  // Affiche l'élément réellement "touché" au clic
+  document.addEventListener('click', (e) => {
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    const dbg = document.getElementById('dbg');
+    dbg.textContent =
+      'CLICK reçu ✅ | target=' + (e.target && e.target.tagName) +
+      ' | elementFromPoint=' + (el && el.tagName) +
+      (el && el.className ? (' .' + el.className) : '');
+  }, true);
+
+  // Vérifie si ta fonction existe (sinon, tu as une erreur JS)
+  window.addEventListener('load', () => {
+    const dbg = document.getElementById('dbg');
+    dbg.textContent += ' | goToConfirm=' + (typeof window.goToConfirm);
+  });
+
+  // Capture les erreurs JS et les affiche à l'écran
+  window.addEventListener('error', (ev) => {
+    const dbg = document.getElementById('dbg');
+    dbg.textContent = 'ERREUR JS ❌ ' + ev.message;
+  });
+</script>
+
     body{
       margin:0;
       font-family: "Obviously", Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
