@@ -57,7 +57,6 @@
       gap:14px;
       margin-bottom:18px;
     }
-
     .brand h1{margin:0;font-size:22px;letter-spacing:.3px}
     .brand p{margin:2px 0 0 0;font-size:14px;color:var(--muted)}
 
@@ -254,7 +253,6 @@
       font-weight:800;
     }
 
-    /* écrans "grand message" */
     .center{text-align:center;padding:26px 8px}
     .center h2{
       margin:0 0 10px 0;
@@ -302,7 +300,7 @@
     <div class="brand">
       <div>
         <h1>Accueil</h1>
-        <p>On est là pour t’aider.</p>
+        <p>On est là pour t’aider 😊</p>
       </div>
     </div>
 
@@ -362,7 +360,7 @@
         </div>
       </div>
 
-      <!-- STEP 3 : coordonnées (uniquement info/equip) -->
+      <!-- STEP 3 : coordonnées (info/equip) -->
       <div id="s3" class="screen">
         <div class="top">
           <div class="title">
@@ -404,11 +402,11 @@
       <!-- STEP 4 : consignes (cours + moto) -->
       <div id="s4" class="screen">
         <div class="center">
-          <h2 id="actionTitle">Parfait ✅</h2>
+          <h2 id="actionTitle">Voici ce que tu peux faire ✅</h2>
           <p id="actionText" class="bigMsg">...</p>
 
           <div class="actionsRow" style="justify-content:center;margin-top:22px;">
-            <button type="button" class="btnSmall btnDanger" onclick="requestAdminHelp()">
+            <button type="button" class="btnSmall btnDanger" onclick="openAdminForm()">
               Je souhaite parler à quelqu’un de l’admin
             </button>
             <button type="button" class="btnSmall btnPrimary" onclick="goHomeSoon()">
@@ -422,7 +420,37 @@
         </div>
       </div>
 
-      <!-- STEP 5 : message final (après coordonnées / après admin) -->
+      <!-- STEP 4B : coordonnées admin (cours + moto uniquement si besoin) -->
+      <div id="s4b" class="screen">
+        <div class="top">
+          <div class="title">
+            <h2>Admin – tes coordonnées</h2>
+            <p class="hint">Indique ton prénom et ton nom, et quelqu’un arrive pour t’aider.</p>
+          </div>
+          <div class="pill"><span class="dot"></span> Admin</div>
+        </div>
+
+        <div class="form">
+          <div class="field">
+            <label for="adminFirstName">Prénom *</label>
+            <input id="adminFirstName" autocomplete="given-name" placeholder="Ex : Noah" />
+          </div>
+
+          <div class="field">
+            <label for="adminLastName">Nom *</label>
+            <input id="adminLastName" autocomplete="family-name" placeholder="Ex : Pittet" />
+          </div>
+        </div>
+
+        <div id="errAdmin" class="error"></div>
+
+        <div class="actionsRow">
+          <button type="button" class="btnSmall" onclick="backToAction()">↩️ Retour</button>
+          <button type="button" class="btnSmall btnPrimary" onclick="submitAdminRequest()">Valider</button>
+        </div>
+      </div>
+
+      <!-- STEP 5 : message final -->
       <div id="s5" class="screen">
         <div class="center">
           <h2 id="finalTitle">Merci 🙏</h2>
@@ -434,14 +462,13 @@
         </div>
       </div>
 
-      <div class="version">VERSION: FLOW-UX-2</div>
+      <div class="version">VERSION: FULL-UX-ADMIN-1</div>
     </div>
   </div>
 
 <script>
   const MAKE_WEBHOOK_URL = "https://hook.eu2.make.com/wezbhxrv8u3n9h6ilgda2rw3e57r5y26";
   const AGENCY = "Réception";
-
   const DEFAULT_RETURN_SECONDS = 15;
 
   const state = {
@@ -473,6 +500,11 @@
     document.getElementById("phoneField").style.display = "none";
     document.getElementById("err").style.display = "none";
 
+    // admin form reset
+    document.getElementById("adminFirstName").value = "";
+    document.getElementById("adminLastName").value = "";
+    document.getElementById("errAdmin").style.display = "none";
+
     show("s1");
   }
 
@@ -486,14 +518,14 @@
 
     state.flow = flow;
 
-    // 1) info/equip -> coordonnées d'abord (s3)
+    // info/equip -> coordonnées d'abord
     if(flow === "info" || flow === "equip"){
       configureForm(flow);
       show("s3");
       return;
     }
 
-    // 2) cours + moto -> consignes direct (s4)
+    // cours/moto -> consignes direct
     configureAction(flow);
     show("s4");
 
@@ -509,11 +541,11 @@
     const instructions = document.getElementById("instructions");
 
     if(flow === "info"){
-      subtitle.textContent = "Indique ton prénom et ton nom, puis on te met en relation.";
-      instructions.textContent = "Ensuite, un message te dira quoi faire.";
+      subtitle.textContent = "Indique ton prénom et ton nom, et on s’occupe du reste.";
+      instructions.textContent = "Après validation, quelqu’un vient te renseigner très bientôt.";
     } else {
       subtitle.textContent = "Indique ton prénom, ton nom et ton téléphone.";
-      instructions.textContent = "Ensuite, on prévient une personne qui vient t’aider.";
+      instructions.textContent = "Après validation, on prévient la personne qui vient t’aider.";
     }
 
     document.getElementById("err").style.display = "none";
@@ -523,14 +555,17 @@
     const title = document.getElementById("actionTitle");
     const text = document.getElementById("actionText");
 
-    title.textContent = "Voici ce que tu dois faire ✅";
+    title.textContent = "Voici ce que tu peux faire ✅";
 
     if(flow === "cours_prive"){
-      text.textContent = "Installe-toi, prends un verre à la cafétéria ou va aux toilettes. Ton moniteur vient te chercher très bientôt.";
+      text.textContent =
+        "Installe-toi tranquillement 😊 Tu peux prendre un café ou un verre d’eau, et si besoin aller aux toilettes. Ton moniteur vient te chercher très bientôt.";
     } else if(flow === "cours_groupe"){
-      text.textContent = "Ton cours a lieu dans la salle de cours. Tu peux entrer et tourner à droite derrière ce comptoir.";
+      text.textContent =
+        "Ton cours a lieu dans la salle de cours. Tu peux entrer et tourner à droite derrière ce comptoir. Installe-toi, on commence bientôt !";
     } else if(flow === "moto"){
-      text.textContent = "Un SMS est envoyé 15 minutes avant le début de ta location avec un lien. Clique dessus pour obtenir ton code clé, puis récupère ta moto et profite 🏍️";
+      text.textContent =
+        "Un SMS est envoyé 15 minutes avant le début de ta location avec un lien. Clique dessus pour obtenir ton code clé, puis récupère ta moto et profite 🏍️";
     } else {
       text.textContent = "Ok.";
     }
@@ -566,6 +601,12 @@
     }
     document.getElementById("err").style.display = "none";
     return true;
+  }
+
+  function showAdminError(msg){
+    const e = document.getElementById("errAdmin");
+    e.textContent = msg;
+    e.style.display = "block";
   }
 
   function startCountdown(seconds){
@@ -609,60 +650,72 @@
     }
   }
 
-  // 1) info/equip: après coordonnées -> écran final long
+  // info/equip: après coordonnées -> message final long
   async function submitForm(){
     if(!validateForm()) return;
 
-    clearAutoTimer();
-
-    // on envoie au webhook (pour que Notion/Slack etc. marche)
     await sendWebhook({
       needsSecretary: (state.flow === "equip"),
       needsAdmin: false
     });
 
-    showFinalAfterForm();
-  }
-
-  function showFinalAfterForm(){
     show("s5");
 
-    const finalTitle = document.getElementById("finalTitle");
-    const finalText = document.getElementById("finalText");
-
+    document.getElementById("finalTitle").textContent = "Merci 🙏";
     if(state.flow === "equip"){
-      finalTitle.textContent = "Merci 🙏";
-      finalText.textContent = "Quelqu’un arrive très bientôt pour t’aider.";
+      document.getElementById("finalText").textContent = "Super, c’est noté ! Quelqu’un arrive très bientôt pour t’aider.";
     } else {
-      finalTitle.textContent = "Merci 🙏";
-      finalText.textContent = "Quelqu’un arrive très bientôt pour te renseigner.";
+      document.getElementById("finalText").textContent = "Parfait ! Quelqu’un arrive très bientôt pour te renseigner.";
     }
 
     startCountdown(DEFAULT_RETURN_SECONDS);
   }
 
-  // 2) cours/moto: bouton OK -> retour accueil (sans appeler admin)
+  // cours/moto: bouton OK -> message final long (sans admin)
   function goHomeSoon(){
     clearAutoTimer();
     show("s5");
     document.getElementById("finalTitle").textContent = "Parfait ✅";
-    document.getElementById("finalText").textContent = "Tu peux suivre les consignes ci-dessus.";
+    document.getElementById("finalText").textContent = "Installe-toi tranquillement, on s’occupe du reste.";
     startCountdown(DEFAULT_RETURN_SECONDS);
   }
 
-  // 3) cours/moto: bouton admin -> webhook + message final long
-  async function requestAdminHelp(){
+  // cours/moto: ouvrir formulaire admin
+  function openAdminForm(){
     clearAutoTimer();
+    document.getElementById("adminFirstName").value = "";
+    document.getElementById("adminLastName").value = "";
+    document.getElementById("errAdmin").style.display = "none";
+    show("s4b");
+  }
 
-    // webhook pour l’admin (utile pour router Make -> Slack/Notion)
+  function backToAction(){
+    show("s4");
+    clearAutoTimer();
+    state.autoTimer = setTimeout(() => resetAll(), DEFAULT_RETURN_SECONDS * 1000);
+  }
+
+  // cours/moto: envoyer demande admin avec prénom/nom
+  async function submitAdminRequest(){
+    const fn = document.getElementById("adminFirstName").value.trim();
+    const ln = document.getElementById("adminLastName").value.trim();
+
+    if(!fn || !ln){
+      showAdminError("Merci de renseigner le prénom et le nom.");
+      return;
+    }
+
     await sendWebhook({
+      firstName: fn,
+      lastName: ln,
+      phone: null,
       needsSecretary: true,
       needsAdmin: true
     });
 
     show("s5");
     document.getElementById("finalTitle").textContent = "C’est noté ✅";
-    document.getElementById("finalText").textContent = "Quelqu’un de l’administration arrive très bientôt pour t’aider.";
+    document.getElementById("finalText").textContent = "Merci ! Quelqu’un de l’administration arrive très bientôt pour t’aider.";
     startCountdown(DEFAULT_RETURN_SECONDS);
   }
 </script>
