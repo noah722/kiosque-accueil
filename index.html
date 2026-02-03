@@ -11,34 +11,40 @@
 
   <style>
     :root{
-      --primary:#005bc0;
-      --cyan:#14c6e9;
-      --red:#ff5c65;
-      --green:#80e080;
+       /* Palette rose */
+  --pink: #ec95ff;
+  --pink-soft: rgba(236,149,255,.18);
+  --pink-strong: #ff7adf;
 
-      --bg:#07152b;
-      --text:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.72);
+  /* Couleurs existantes */
+  --primary:#005bc0;
+  --cyan:#14c6e9;
+  --red:#ff5c65;
+  --green:#80e080;
 
-      --card:rgba(255,255,255,.08);
-      --card2:rgba(255,255,255,.06);
-      --stroke:rgba(255,255,255,.12);
-      --btn:rgba(255,255,255,.10);
-      --btnHover:rgba(255,255,255,.18);
+  --bg:#07152b;
+  --text:rgba(255,255,255,.92);
+  --muted:rgba(255,255,255,.72);
 
-      --radius:26px;
-      --shadow:0 20px 60px rgba(0,0,0,.35);
-    }
+  --card:rgba(255,255,255,.10);
+  --card2:rgba(255,255,255,.07);
+  --stroke:rgba(255,255,255,.14);
 
+  --btn:rgba(236,149,255,.14);
+  --btnHover:rgba(236,149,255,.22);
+
+  --radius:26px;
+  --shadow:0 20px 60px rgba(0,0,0,.35);
+}
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       background:
-        radial-gradient(1200px 900px at 15% 10%, rgba(20,198,233,.22), transparent 55%),
-        radial-gradient(900px 700px at 85% 20%, rgba(0,91,192,.28), transparent 55%),
-        radial-gradient(900px 700px at 70% 95%, rgba(236,149,255,.12), transparent 55%),
-        var(--bg);
+      radial-gradient(1200px 900px at 15% 10%, rgba(236,149,255,.25), transparent 55%),
+      radial-gradient(900px 700px at 85% 20%, rgba(255,122,223,.18), transparent 55%),
+      radial-gradient(900px 700px at 70% 95%, rgba(20,198,233,.12), transparent 55%),
+      var(--bg);
       color:var(--text);
       min-height:100vh;
       display:flex;
@@ -118,28 +124,43 @@
       margin-top:18px;
     }
 
-    button.big{
-      appearance:none;
-      border:none;
-      cursor:pointer;
-      padding:18px;
-      min-height:74px;
-      border-radius:20px;
-      background:var(--btn);
-      border:1px solid var(--stroke);
-      color:var(--text);
-      font-size:20px;
-      font-weight:900;
-      display:flex;
-      align-items:center;
-      gap:14px;
-      width:100%;
-      text-align:left;
-      transition: background .15s ease, transform .05s ease;
-      -webkit-tap-highlight-color: transparent;
-    }
-    button.big:hover{background:var(--btnHover)}
-    button.big:active{transform:scale(.99)}
+      button.big{
+    appearance:none;
+    border:none;
+    cursor:pointer;
+    padding:18px;
+    min-height:74px;
+    border-radius:22px;
+    background: linear-gradient(
+      135deg,
+      rgba(236,149,255,.28),
+      rgba(236,149,255,.12)
+    );
+    border:1px solid rgba(236,149,255,.35);
+    color:var(--text);
+    font-size:20px;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    width:100%;
+    text-align:left;
+    transition: background .2s ease, transform .06s ease, box-shadow .2s ease;
+  }
+    
+  button.big:hover{
+    background: linear-gradient(
+      135deg,
+      rgba(236,149,255,.38),
+      rgba(236,149,255,.18)
+    );
+    box-shadow: 0 0 0 4px rgba(236,149,255,.18);
+  }
+  
+  button.big:active{
+    transform: scale(.98);
+  }
+
 
     .icon{
       width:44px;height:44px;
