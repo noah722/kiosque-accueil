@@ -133,6 +133,9 @@
       align-items:center;
       gap:14px;
       transition: background .15s ease, transform .05s ease;
+      width:100%;
+      text-align:left;
+      -webkit-tap-highlight-color: transparent;
     }
     button.big:hover{ background: var(--btnHover) }
     button.big:active{ transform:scale(.99) }
@@ -144,6 +147,7 @@
       place-items:center;
       background: rgba(255,255,255,.10);
       font-size:22px;
+      flex: 0 0 auto;
     }
 
     .choices{
@@ -164,6 +168,8 @@
       justify-content:space-between;
       font-size:22px;
       font-weight:900;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
     }
     .choice:hover{ background: var(--btnHover) }
     .choice.ok{ outline:2px solid rgba(128,224,128,.35) }
@@ -175,16 +181,8 @@
       grid-template-columns: repeat(2, 1fr);
       gap:12px;
     }
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-    label{
-      font-size:14px;
-      color: var(--muted);
-      font-weight:700;
-    }
+    .field{ display:flex; flex-direction:column; gap:8px; }
+    label{ font-size:14px; color: var(--muted); font-weight:700; }
     input{
       width:100%;
       padding:14px 14px;
@@ -218,6 +216,7 @@
       background: var(--btn);
       color: var(--text);
       cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
     }
     .btnSmall:hover{ background: var(--btnHover) }
     .btnPrimary{
@@ -232,10 +231,7 @@
       line-height:1.35;
     }
 
-    .center{
-      text-align:center;
-      padding:26px 8px;
-    }
+    .center{ text-align:center; padding:26px 8px; }
     .center h2{ margin:0 0 8px 0; font-size:42px; }
     .center p{ margin:0; font-size:18px; color:var(--muted); }
     .spinner{
@@ -280,7 +276,7 @@
 
     <div class="card">
 
-      <!-- ÉCRAN 1 : choix principal -->
+      <!-- ÉCRAN 1 -->
       <div id="s1" class="screen active">
         <div class="top">
           <div class="title">
@@ -291,19 +287,19 @@
         </div>
 
         <div class="grid">
-          <button class="big" onclick="pick('info')">
+          <button type="button" class="big" data-pick="info">
             <span class="icon">ℹ️</span> Informations & réservations
           </button>
 
-          <button class="big" onclick="pick('cours')">
+          <button type="button" class="big" data-pick="cours">
             <span class="icon">📚</span> J’ai un cours réservé
           </button>
 
-          <button class="big" onclick="pick('moto')">
+          <button type="button" class="big" data-pick="moto">
             <span class="icon">🏍️</span> J’ai loué une moto
           </button>
 
-          <button class="big" onclick="pick('equip')">
+          <button type="button" class="big" data-pick="equip">
             <span class="icon">🧤</span> Je souhaite louer de l’équipement
           </button>
         </div>
@@ -311,7 +307,7 @@
         <p class="hint">Vos informations servent uniquement à vous accueillir et à vous orienter.</p>
       </div>
 
-      <!-- ÉCRAN 2 : sous-choix cours -->
+      <!-- ÉCRAN 2 -->
       <div id="s2" class="screen">
         <div class="top">
           <div class="title">
@@ -322,20 +318,20 @@
         </div>
 
         <div class="choices">
-          <div class="choice alt" onclick="pickCourseType('cours_prive')">
+          <div class="choice alt" data-course="cours_prive">
             <span>👤 Privé</span><span style="color:var(--cyan)">Infos</span>
           </div>
-          <div class="choice alt" onclick="pickCourseType('cours_groupe')">
+          <div class="choice alt" data-course="cours_groupe">
             <span>👥 Groupe</span><span style="color:var(--cyan)">Infos</span>
           </div>
         </div>
 
         <div class="actionsRow">
-          <button class="btnSmall" onclick="resetAll()">↩️ Retour</button>
+          <button type="button" class="btnSmall" id="btnBackHome1">↩️ Retour</button>
         </div>
       </div>
 
-      <!-- ÉCRAN 3 : formulaire + consignes -->
+      <!-- ÉCRAN 3 -->
       <div id="s3" class="screen">
         <div class="top">
           <div class="title">
@@ -361,7 +357,7 @@
             <input id="phone" autocomplete="tel" placeholder="Ex : 079 123 45 67" />
           </div>
 
-          <div id="instructionsBox" class="field full">
+          <div class="field full">
             <div class="hint" id="instructions"></div>
           </div>
         </div>
@@ -369,12 +365,12 @@
         <div id="err" class="error">Merci de renseigner au minimum le prénom et le nom.</div>
 
         <div class="actionsRow">
-          <button class="btnSmall" onclick="resetAll()">↩️ Revenir au début</button>
-          <button class="btnSmall btnPrimary" onclick="submit()">Valider</button>
+          <button type="button" class="btnSmall" id="btnBackHome2">↩️ Revenir au début</button>
+          <button type="button" class="btnSmall btnPrimary" id="btnSubmit">Valider</button>
         </div>
       </div>
 
-      <!-- ÉCRAN 4 : merci -->
+      <!-- ÉCRAN 4 -->
       <div id="s4" class="screen">
         <div class="center">
           <h2>Merci 🙏</h2>
@@ -390,16 +386,11 @@
   </div>
 
 <script>
-  // 1) Mets ici ton webhook Make
+  // Mets ici ton webhook Make quand prêt
   const MAKE_WEBHOOK_URL = "";
-
-  // 2) Optionnel : fixe une agence si tu veux (ou laisse vide)
   const AGENCY = "Réception";
 
-  const state = {
-    flow: null,     // info | cours_prive | cours_groupe | moto | equip
-    needPhone: false
-  };
+  const state = { flow:null, needPhone:false };
 
   function show(id){
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -414,26 +405,6 @@
     document.getElementById('phone').value = "";
     document.getElementById('err').style.display = "none";
     show('s1');
-  }
-
-  function pick(which){
-    if(which === 'cours'){
-      show('s2');
-      return;
-    }
-    if(which === 'info'){
-      configureForm('info');
-    } else if(which === 'moto'){
-      configureForm('moto');
-    } else if(which === 'equip'){
-      configureForm('equip');
-    }
-    show('s3');
-  }
-
-  function pickCourseType(which){
-    configureForm(which);
-    show('s3');
   }
 
   function configureForm(flow){
@@ -452,21 +423,13 @@
 
     if(flow === 'info'){
       instructions.textContent = "Merci. Une personne pourra vous renseigner dès que possible.";
-    }
-
-    if(flow === 'cours_prive'){
+    } else if(flow === 'cours_prive'){
       instructions.textContent = "Parfait 👍 Vous pouvez vous installer, boire quelque chose à la cafétéria ou aller aux toilettes. Votre moniteur viendra vous chercher.";
-    }
-
-    if(flow === 'cours_groupe'){
+    } else if(flow === 'cours_groupe'){
       instructions.textContent = "Parfait 👍 Votre cours aura lieu dans la salle de cours. Vous pouvez entrer et tourner à droite derrière ce comptoir.";
-    }
-
-    if(flow === 'moto'){
-      instructions.textContent = "Un SMS a été envoyé automatiquement 15 minutes avant le début de votre location avec un lien. Il vous suffit de cliquer dessus pour obtenir votre code clé, récupérer votre moto et profiter 🚀";
-    }
-
-    if(flow === 'equip'){
+    } else if(flow === 'moto'){
+      instructions.textContent = "Un SMS a été envoyé automatiquement 15 minutes avant le début de votre location avec un lien. Cliquez dessus pour obtenir votre code clé, récupérer votre moto et profiter 🏍️";
+    } else if(flow === 'equip'){
       title.textContent = "Location d’équipement";
       subtitle.textContent = "Merci d’indiquer votre prénom, nom et téléphone. Nous prévenons la secrétaire.";
       instructions.textContent = "Dès validation, la secrétaire est notifiée pour venir vous aider.";
@@ -490,7 +453,6 @@
       document.getElementById('err').style.display = "block";
       return false;
     }
-
     document.getElementById('err').style.display = "none";
     return true;
   }
@@ -522,7 +484,6 @@
 
     show('s4');
 
-    // message final selon le cas
     const finalText = document.getElementById('finalText');
     if(state.flow === 'equip'){
       finalText.textContent = "Merci. La secrétaire a été prévenue et arrive.";
@@ -532,7 +493,6 @@
       finalText.textContent = "Merci. C’est noté.";
     }
 
-    // envoi au webhook (si configuré)
     if(MAKE_WEBHOOK_URL){
       try{
         await fetch(https://hook.eu2.make.com/wezbhxrv8u3n9h6ilgda2rw3e57r5y26, {
@@ -540,12 +500,9 @@
           headers: {"Content-Type":"application/json"},
           body: JSON.stringify(payload)
         });
-      }catch(e){
-        // on ne casse jamais l’expérience utilisateur
-      }
+      }catch(e){}
     }
 
-    // retour auto
     let s = 6;
     const el = document.getElementById('count');
     el.textContent = s;
@@ -554,7 +511,36 @@
       if(s<=0){ clearInterval(t); resetAll(); }
     }, 1000);
   }
+
+  // ====== BIND EVENTS (robuste) ======
+  document.addEventListener("DOMContentLoaded", () => {
+    // Step 1 buttons
+    document.querySelectorAll("[data-pick]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const which = btn.getAttribute("data-pick");
+
+        if(which === "cours"){
+          show("s2");
+          return;
+        }
+        configureForm(which);
+        show("s3");
+      });
+    });
+
+    // Step 2 choices
+    document.querySelectorAll("[data-course]").forEach(div => {
+      div.addEventListener("click", () => {
+        const which = div.getAttribute("data-course");
+        configureForm(which);
+        show("s3");
+      });
+    });
+
+    document.getElementById("btnBackHome1").addEventListener("click", resetAll);
+    document.getElementById("btnBackHome2").addEventListener("click", resetAll);
+    document.getElementById("btnSubmit").addEventListener("click", submit);
+  });
 </script>
 </body>
 </html>
-
