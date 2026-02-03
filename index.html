@@ -34,15 +34,6 @@
     }
 
     *{ box-sizing:border-box }
-    <div id="dbg"
-     style="position:fixed;top:10px;left:10px;right:10px;
-            background:rgba(0,0,0,.65);color:#fff;padding:10px 12px;
-            border-radius:12px;font:14px system-ui;z-index:999999;
-            pointer-events:none;">
-  Debug prêt…
-</div>
-
-<script>
     body{
       margin:0;
       font-family: "Obviously", Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -94,6 +85,7 @@
       justify-content:space-between;
       gap:20px;
       flex-wrap:wrap;
+      align-items:flex-start;
     }
 
     .title h2{
@@ -286,49 +278,50 @@
     }
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <div class="brand">
       <div class="logo"></div>
       <div>
-        <h1>L-Pittet</h1>
-        <p>Accueil & informations</p>
+        <h1>Accueil</h1>
+        <p>Nous sommes là pour vous aider.</p>
       </div>
     </div>
 
     <div class="card">
-      <!-- ÉCRAN 1 -->
+      <!-- STEP 1 -->
       <div id="s1" class="screen active">
         <div class="top">
           <div class="title">
             <h2>Bienvenue 👋</h2>
-            <p>Choisissez ce que vous venez faire aujourd hui.</p>
+            <p>Choisissez ce que vous venez faire aujourd’hui.</p>
           </div>
           <div class="pill"><span class="dot"></span> Réception</div>
         </div>
 
         <div class="grid">
           <button type="button" class="big" onclick="pick('info')">
-            <span class="icon">ℹ️</span> Informations & réservations
+            <span class="icon">ℹ️</span> Informations et réservations
           </button>
 
           <button type="button" class="big" onclick="pick('cours')">
-            <span class="icon">📚</span> J ai un cours réservé
+            <span class="icon">📚</span> J’ai un cours réservé
           </button>
 
           <button type="button" class="big" onclick="pick('moto')">
-            <span class="icon">🏍️</span> J ai loué une moto
+            <span class="icon">🏍️</span> J’ai loué une moto
           </button>
 
           <button type="button" class="big" onclick="pick('equip')">
-            <span class="icon">🧤</span> Je souhaite louer de l équipement
+            <span class="icon">🧤</span> Je souhaite louer de l’équipement
           </button>
         </div>
 
         <p class="hint">Vos informations servent uniquement à vous accueillir et à vous orienter.</p>
       </div>
 
-      <!-- ÉCRAN 2 : sous-choix cours -->
+      <!-- STEP 2: course type -->
       <div id="s2" class="screen">
         <div class="top">
           <div class="title">
@@ -352,7 +345,7 @@
         </div>
       </div>
 
-      <!-- ÉCRAN 3 : formulaire + consignes -->
+      <!-- STEP 3: form -->
       <div id="s3" class="screen">
         <div class="top">
           <div class="title">
@@ -391,27 +384,27 @@
         </div>
       </div>
 
-      <!-- ÉCRAN 4 : merci -->
+      <!-- STEP 4: thanks -->
       <div id="s4" class="screen">
         <div class="center">
           <h2>Merci 🙏</h2>
-          <p id="finalText">C est noté.</p>
-          <div class="spinner"></div>
+          <p id="finalText">C’est noté.</p>
+          <div class="spinner" aria-hidden="true"></div>
           <p style="margin-top:12px;color:var(--muted)">
-            Retour à l accueil dans <span id="count">6</span>…
+            Retour à l’accueil dans <span id="count">6</span>…
           </p>
         </div>
       </div>
 
-      <div class="version">VERSION: 2026-02-03-v2</div>
+      <div class="version">VERSION: 2026-02-03-stable</div>
     </div>
   </div>
 
 <script>
-  // ✅ Mets ici l URL du webhook Make (quand tu las)
+  // Your Make webhook (already set)
   const MAKE_WEBHOOK_URL = "https://hook.eu2.make.com/wezbhxrv8u3n9h6ilgda2rw3e57r5y26";
 
-  // Optionnel (si tu veux stocker agence / lieu)
+  // Optional: store location/agency
   const AGENCY = "Réception";
 
   const state = {
@@ -427,11 +420,14 @@
   function resetAll(){
     state.flow = null;
     state.needPhone = false;
+
     document.getElementById('firstName').value = "";
     document.getElementById('lastName').value = "";
     document.getElementById('phone').value = "";
+
     document.getElementById('phoneField').style.display = "none";
     document.getElementById('err').style.display = "none";
+
     show('s1');
   }
 
@@ -455,21 +451,21 @@
     state.needPhone = (flow === 'equip');
     phoneField.style.display = state.needPhone ? "block" : "none";
 
+    // default
     title.textContent = "Vos coordonnées";
-    subtitle.textContent = "Merci d indiquer au minimum votre prénom et votre nom.";
+    subtitle.textContent = "Merci d’indiquer au minimum votre prénom et votre nom.";
 
     if(flow === 'info'){
       instructions.textContent = "Merci. Une personne pourra vous renseigner dès que possible.";
     } else if(flow === 'cours_prive'){
-      instructions.textContent = "Parfait 👍 Tu peux t 
-        installer, boire quelque chose à la cafétéria ou aller aux toilettes. Ton moniteur viendra te chercher.";
+      instructions.textContent = "Parfait 👍 Tu peux t’installer, boire quelque chose à la cafétéria ou aller aux toilettes. Ton moniteur viendra te chercher.";
     } else if(flow === 'cours_groupe'){
       instructions.textContent = "Parfait 👍 Ton cours aura lieu dans la salle de cours. Tu peux entrer et tourner à droite derrière ce comptoir.";
     } else if(flow === 'moto'){
-      instructions.textContent = "Un SMS s est automatiquement envoyé 15 minutes avant le début de ta location avec un lien. Il te suffit de cliquer dessus pour obtenir ton code clé, récupérer ta moto et profiter 🏍️";
+      instructions.textContent = "Un SMS s’est automatiquement envoyé 15 minutes avant le début de ta location avec un lien. Il te suffit de cliquer dessus pour obtenir ton code clé, récupérer ta moto et profiter 🏍️";
     } else if(flow === 'equip'){
-      title.textContent = "Location d équipement";
-      subtitle.textContent = "Merci d indiquer ton prénom, nom et téléphone. Nous prévenons la secrétaire.";
+      title.textContent = "Location d’équipement";
+      subtitle.textContent = "Merci d’indiquer ton prénom, nom et téléphone. Nous prévenons la secrétaire.";
       instructions.textContent = "Après validation, la secrétaire est notifiée pour venir te renseigner.";
     }
 
@@ -478,13 +474,19 @@
 
   function flowLabel(flow){
     switch(flow){
-      case 'info': return "Informations & réservations";
-      case 'cours_prive': return "Cours réservé – privé";
-      case 'cours_groupe': return "Cours réservé – groupe";
-      case 'moto': return "Location moto";
-      case 'equip': return "Location équipement";
+      case 'info': return "Informations et réservations";
+      case 'cours_prive': return "J'ai un cours réservé – privé";
+      case 'cours_groupe': return "J'ai un cours réservé – groupe";
+      case 'moto': return "J'ai loué une moto";
+      case 'equip': return "Je souhaite louer de l'équipement";
       default: return "Inconnu";
     }
+  }
+
+  function showError(msg){
+    const e = document.getElementById('err');
+    e.textContent = msg;
+    e.style.display = "block";
   }
 
   function validate(){
@@ -504,26 +506,22 @@
     return true;
   }
 
-  function showError(msg){
-    const e = document.getElementById('err');
-    e.textContent = msg;
-    e.style.display = "block";
-  }
-
   async function submit(){
     if(!validate()) return;
 
+    // Build payload for Make -> Notion
     const payload = {
       firstName: document.getElementById('firstName').value.trim(),
       lastName: document.getElementById('lastName').value.trim(),
       phone: (document.getElementById('phone').value.trim() || null),
       flow: state.flow,
       flowLabel: flowLabel(state.flow),
+      needsSecretary: (state.flow === 'equip'),
       agency: AGENCY,
-      timestamp: new Date().toISOString(),
-      needsSecretary: (state.flow === 'equip')
+      timestamp: new Date().toISOString()
     };
 
+    // Show thanks screen
     show('s4');
 
     const finalText = document.getElementById('finalText');
@@ -532,28 +530,37 @@
     } else if(state.flow === 'moto'){
       finalText.textContent = "Merci. Bonne location 🏍️";
     } else {
-      finalText.textContent = "Merci. C est noté.";
+      finalText.textContent = "Merci. C’est noté.";
     }
 
-    if(MAKE_WEBHOOK_URL){
-      try{
-        await fetch(https://hook.eu2.make.com/wezbhxrv8u3n9h6ilgda2rw3e57r5y26, {
-          method: "POST",
-          headers: {"Content-Type":"application/json"},
-          body: JSON.stringify(payload)
-        });
-      } catch(e) {
-        // on ne casse jamais l expérience utilisateur
-      }
+    // Send to Make webhook (non-blocking UI)
+    try{
+      await fetch(MAKE_WEBHOOK_URL, {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(payload)
+      });
+    } catch(e) {
+      // Do not break kiosk UX
+      console.warn("Webhook error:", e);
     }
 
-    // retour auto
-    let s = 6;
+    // Auto reset countdown
+    startCountdown(6);
+  }
+
+  function startCountdown(seconds){
+    let s = seconds;
     const el = document.getElementById('count');
     el.textContent = s;
-    const t = setInterval(()=>{
-      s--; el.textContent = s;
-      if(s<=0){ clearInterval(t); resetAll(); }
+
+    const t = setInterval(() => {
+      s -= 1;
+      el.textContent = s;
+      if (s <= 0){
+        clearInterval(t);
+        resetAll();
+      }
     }, 1000);
   }
 </script>
